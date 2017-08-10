@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_card_memorizer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="daxidz.ch.nomenclature.CardMemorizer"
+    android:orientation="horizontal"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/left_button"
+        android:layout_height="match_parent"
+        android:layout_weight="0.15"
+        android:onClick="changeToPreviousCard"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/question"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="flipCard"
+            android:layout_weight="0.45"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/answer"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="flipCard"
+            android:layout_weight="0.45"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/hardCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="Difficile" />
+
+            <CheckBox
+                android:id="@+id/knownCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Connue" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/right_button"
+        android:layout_weight="0.15"
+        android:layout_height="match_parent"
+        android:onClick="changeToNextCard" />
+
+
+</LinearLayout>
