@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Nomenclature</string>
+    <string name="app_name">Formula</string>
 
     <string name="title_activity_card_memorizer">CardMemorizer</string>
     <string name="title_activity_card_chooser">CardChooser</string>

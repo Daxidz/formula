@@ -25,6 +25,7 @@
 
         <CheckBox
             android:text="Normales"
+            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkboxNormal"
@@ -32,6 +33,7 @@
 
         <CheckBox
             android:text="Difficiles"
+            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkboxDifficult"
@@ -39,6 +41,7 @@
 
         <CheckBox
             android:text="Connues"
+            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkboxKnown"
@@ -48,33 +51,36 @@
 
 
     <TextView
-        android:text="Occurence des difficiles"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Occurence des difficiles" />
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <RadioButton
-            android:text="1x"
+            android:id="@+id/radio0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true" />
+
         <RadioButton
-            android:text="2x"
+            android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <RadioButton
-            android:text="3x"
+            android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <RadioButton
-            android:text="4x"
+            android:id="@+id/radio3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -83,10 +89,10 @@
     </RadioGroup>
 
     <Button
-        android:text="OK"
+        android:id="@+id/buttonOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonOK"
-        android:onClick="startMemorizer"/>
+        android:onClick="startMemorizer"
+        android:text="OK" />
 
 </LinearLayout>

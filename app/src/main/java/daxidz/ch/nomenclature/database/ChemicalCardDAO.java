@@ -15,17 +15,17 @@ import daxidz.ch.nomenclature.ChemicalCard;
 public class ChemicalCardDAO extends BaseDAO {
 
     public static final String NAME = "name";
-    public static final String NOMENCLATURE = "nomenclature";
+    public static final String FORMULA = "nomenclature";
     public static final String TAG = "tag";
 
     public static final String TABLE_NAME = "Chemical_card";
 
-    private String[] allCollumns = { NAME, NOMENCLATURE, TAG };
+    private String[] allCollumns = { NAME, FORMULA, TAG };
 
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     NAME + " TEXT NOT NULL PRIMARY KEY, " +
-                    NOMENCLATURE + " TEXT NOT NULL, " +
+                    FORMULA + " TEXT NOT NULL, " +
                     TAG + " INTEGER DEFAULT " + ChemicalCard.Tag.NONE +
                     " );";
 
@@ -45,7 +45,7 @@ public class ChemicalCardDAO extends BaseDAO {
         ContentValues value = new ContentValues();
 
         value.put(NAME, card.getName());
-        value.put(NOMENCLATURE, card.getNomenclature());
+        value.put(FORMULA, card.getNomenclature());
 
         value.put(TAG, card.getTag().ordinal());
 
