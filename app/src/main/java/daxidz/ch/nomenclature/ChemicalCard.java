@@ -55,7 +55,7 @@ public class ChemicalCard {
         this.tag = tag;
     }
 
-    public enum Tag implements Parcelable {
+    public enum Tag {
         NONE, HARD, KNOWN;
 
 

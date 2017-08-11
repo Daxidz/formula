@@ -26,6 +26,9 @@ public class CardMemorizer extends AppCompatActivity {
     private TextView questionText;
     private TextView answerText;
 
+    CheckBox hardCheckbox;
+    CheckBox knownCheckbox;
+
     private View decorView;
 
     private ChemicalCardDAO chemicalCardDAO;
@@ -38,16 +41,21 @@ public class CardMemorizer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_card_memorizer);
+
         Intent intent = getIntent();
 
-        ArrayList<ChemicalCard.Tag> selectedTags = intent.getSerializableExtra(CardChooser.TAGS_CHOSEN);
+        // Convert the Integer ArrayList to Tags ArrayList
+        ArrayList<ChemicalCard.Tag> tagsChosen = new ArrayList<>();
+        ArrayList<Integer> tagsChosenInt = intent.getIntegerArrayListExtra(CardChooser.TAGS_CHOSEN);
+        for (int tagInt : tagsChosenInt) {
+            tagsChosen.add(ChemicalCard.Tag.values()[tagInt]);
+        }
 
+        // Open the DB and load the cards corresponding to the tags chosen before
         chemicalCardDAO = new ChemicalCardDAO(this);
-
         chemicalCardDAO.open();
-
-        cardsList = chemicalCardDAO.selectAll();
-
+        cardsList = chemicalCardDAO.selectTagged(tagsChosen);
         chemicalCardDAO.close();
 
         mode = (Mode) intent.getSerializableExtra(MainActivity.MODE);
@@ -65,11 +73,13 @@ public class CardMemorizer extends AppCompatActivity {
 
         questionText = (TextView) findViewById(R.id.question);
         answerText = (TextView) findViewById(R.id.answer);
+        hardCheckbox = (CheckBox) findViewById(R.id.hardCheckbox);
+        knownCheckbox = (CheckBox) findViewById(R.id.knownCheckbox);
 
-        setActualCard(mode, cardsList.get(0));
+        setActualCard(cardsList.get(0));
     }
 
-    @Override
+   /* @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
@@ -81,33 +91,43 @@ public class CardMemorizer extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             //| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             );}
-    }
+    }*/
 
+    /**
+     * Reveal the answer of the card.
+     *
+     * @param view
+     */
     public void flipCard(View view) {
-        if (actualCard.getName().equals(questionText.getText().toString())) {
-            answerText.setText(actualCard.getNomenclature());
+        if (!(answerText.getText()).equals("")) {
+            answerText.setText("");
         } else {
-            answerText.setText(actualCard.getName());
+            if (actualCard.getName().equals(questionText.getText().toString())) {
+                answerText.setText(actualCard.getNomenclature());
+            } else {
+                answerText.setText(actualCard.getName());
+            }
         }
     }
 
-    public void setActualCard(Mode mode, ChemicalCard card) {
+    /**
+     * Set the card passed in parameter as the actual card.
+     *
+     * @param card
+     */
+    public void setActualCard(ChemicalCard card) {
         actualCard = card;
 
-        CheckBox hard = (CheckBox) findViewById(R.id.hardCheckbox);
-
-        CheckBox known = (CheckBox) findViewById(R.id.knownCheckbox);
-
         if (card.getTag().equals(ChemicalCard.Tag.HARD)) {
-            hard.setChecked(true);
+            hardCheckbox.setChecked(true);
         } else {
-            hard.setChecked(false);
+            hardCheckbox.setChecked(false);
         }
 
         if (card.getTag().equals(ChemicalCard.Tag.KNOWN)) {
-            known.setChecked(true);
+            knownCheckbox.setChecked(true);
         } else {
-            known.setChecked(false);
+            knownCheckbox.setChecked(false);
         }
 
         String textToDisplay = "";
@@ -128,7 +148,7 @@ public class CardMemorizer extends AppCompatActivity {
                 break;
             default:
                 break;
-        }
+        }answerText.setText("");
         questionText.setText(textToDisplay);
     }
 
@@ -140,7 +160,7 @@ public class CardMemorizer extends AppCompatActivity {
             listIndex = cardsList.size() - 1;
         }
 
-        setActualCard(mode, cardsList.get(listIndex));
+        setActualCard(cardsList.get(listIndex));
     }
 
     public void changeToNextCard(View view) {
@@ -149,15 +169,29 @@ public class CardMemorizer extends AppCompatActivity {
         } else {
             listIndex = 0;
         }
-        setActualCard(mode, cardsList.get(listIndex));
+        setActualCard(cardsList.get(listIndex));
     }
 
     public void checkboxChecked(View view) {
-
+        switch (view.getId()) {
+            case R.id.hardCheckbox:
+                knownCheckbox.setChecked(false);
+                actualCard.setTag(ChemicalCard.Tag.HARD);
+                break;
+            case R.id.knownCheckbox:
+                hardCheckbox.setChecked(false);
+                actualCard.setTag(ChemicalCard.Tag.KNOWN);
+                break;
+        }
+        chemicalCardDAO.open();
+        chemicalCardDAO.updateTag(actualCard);
+        chemicalCardDAO.close();
     }
+
 
     @Override
     public void onStop() {
+        super.onStop();
         chemicalCardDAO.open();
         for (ChemicalCard card : cardsList) {
             chemicalCardDAO.updateTag(card);
@@ -167,6 +201,7 @@ public class CardMemorizer extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         chemicalCardDAO.open();
         for (ChemicalCard card : cardsList) {
             chemicalCardDAO.updateTag(card);

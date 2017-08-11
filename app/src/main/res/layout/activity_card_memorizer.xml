@@ -50,8 +50,9 @@
             <CheckBox
                 android:id="@+id/hardCheckbox"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:onClick="checkboxChecked"
                 android:text="Difficile" />
 
             <CheckBox
@@ -59,18 +60,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:onClick="checkboxChecked"
                 android:text="Connue" />
         </LinearLayout>
 
-
     </LinearLayout>
 
-
     <TextView
-        android:layout_width="wrap_content"
         android:id="@+id/right_button"
-        android:layout_weight="0.15"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_weight="0.15"
         android:onClick="changeToNextCard" />
 
 

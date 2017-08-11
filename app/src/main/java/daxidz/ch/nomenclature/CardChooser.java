@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,22 +33,29 @@ public class CardChooser extends AppCompatActivity {
     }
 
     public void startMemorizer(View view) {
-
-        ArrayList<ChemicalCard.Tag> tagsChosen = new ArrayList<>();
+        ArrayList<Integer> tagsChosenInt = new ArrayList<>();
 
         if (((CheckBox) findViewById(R.id.checkboxDifficult)).isChecked()) {
-            tagsChosen.add(ChemicalCard.Tag.HARD);
+            tagsChosenInt.add(ChemicalCard.Tag.HARD.ordinal());
         }
         if (((CheckBox) findViewById(R.id.checkboxKnown)).isChecked()) {
-            tagsChosen.add(ChemicalCard.Tag.KNOWN);
+            tagsChosenInt.add(ChemicalCard.Tag.KNOWN.ordinal());
         }
         if (((CheckBox) findViewById(R.id.checkboxNormal)).isChecked()) {
-            tagsChosen.add(ChemicalCard.Tag.NONE);
+            tagsChosenInt.add(ChemicalCard.Tag.NONE.ordinal());
+        }
+
+        if (tagsChosenInt.size() == 0) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Vous devez selectionner des cartes!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
         }
 
         intent = new Intent(this, CardMemorizer.class);
 
-        intent.putExtra(TAGS_CHOSEN, tagsChosen);
+        intent.putIntegerArrayListExtra(TAGS_CHOSEN, tagsChosenInt);
+
+        intent.putExtra(MainActivity.MODE, mode);
 
         startActivity(intent);
 
