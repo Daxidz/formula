@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void startMemorizer(Mode mode) {
+    public void startCardChooser(Mode mode) {
         Intent intent = new Intent(this, CardChooser.class);
 
         intent.putExtra(MODE, mode);
@@ -25,15 +24,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startNameToNomeclature(View view) {
-        startMemorizer(Mode.NAME_TO_NOMENCLATURE);
+        startCardChooser(Mode.NAME_TO_NOMENCLATURE);
     }
 
     public void startNomenclatureToName(View view) {
-        startMemorizer(Mode.NOMECLATURE_TO_NAME);
+        startCardChooser(Mode.NOMECLATURE_TO_NAME);
     }
 
     public void startRandom(View view) {
-        startMemorizer(Mode.RANDOM);
+        startCardChooser(Mode.RANDOM);
+    }
+
+    public void startComponentsList(View view) {
+        Intent intent = new Intent(this, ComponentsList.class);
+        startActivity(intent);
     }
 
 }

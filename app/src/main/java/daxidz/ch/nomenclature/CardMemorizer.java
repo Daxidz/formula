@@ -16,25 +16,22 @@ import daxidz.ch.nomenclature.database.ChemicalCardDAO;
 
 public class CardMemorizer extends AppCompatActivity {
 
-
-    ChemicalCard card1 = new ChemicalCard("Nom1", "Nomenclature1");
-    ChemicalCard card2 = new ChemicalCard("Nom2", "Nomenclature2");
-    ChemicalCard card3 = new ChemicalCard("Nom3", "Nomenclature3");
-
-    ArrayList<ChemicalCard> cardsList = new ArrayList<>();
+    private ArrayList<ChemicalCard> cardsList = new ArrayList<>();
+    private ArrayList<ChemicalCard.Tag> tagsChosen = new ArrayList<>();
+    private ArrayList<Integer> tagsChosenInt;
 
     //! ArrayList representing the order of the indexes of the cardList to be processed
-    ArrayList<Integer> indexes;
+    private ArrayList<Integer> indexes;
 
-    ChemicalCard actualCard;
+    private ChemicalCard actualCard;
 
     private TextView questionText;
     private TextView answerText;
 
-    CheckBox hardCheckbox;
-    CheckBox knownCheckbox;
+    private CheckBox hardCheckbox;
+    private CheckBox knownCheckbox;
 
-    private View decorView;
+    private int hardFrequency;
 
     private ChemicalCardDAO chemicalCardDAO;
 
@@ -50,9 +47,8 @@ public class CardMemorizer extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        // Convert the Integer ArrayList to Tags ArrayList
-        ArrayList<ChemicalCard.Tag> tagsChosen = new ArrayList<>();
-        ArrayList<Integer> tagsChosenInt = intent.getIntegerArrayListExtra(CardChooser.TAGS_CHOSEN);
+        // Convert the Integer ArrayList to Tags ArrayList0
+        tagsChosenInt = intent.getIntegerArrayListExtra(CardChooser.TAGS_CHOSEN);
         for (int tagInt : tagsChosenInt) {
             tagsChosen.add(ChemicalCard.Tag.values()[tagInt]);
         }
@@ -79,11 +75,12 @@ public class CardMemorizer extends AppCompatActivity {
         mode = (Mode) intent.getSerializableExtra(MainActivity.MODE);
 
         if (tagsChosen.contains(ChemicalCard.Tag.HARD)) {
-            int hardFrequency = intent.getIntExtra(CardChooser.HARD_FREQUENCY, 1);
+            hardFrequency = intent.getIntExtra(CardChooser.HARD_FREQUENCY, 1);
             if (hardFrequency != 1) {
                 for (int i = 0; i < cardsList.size(); ++i) {
                     if (cardsList.get(i).getTag().equals(ChemicalCard.Tag.HARD)) {
-                        for (int j = 0; j < hardFrequency; ++j) {
+                        // hardFrequency - 1 is because the list already contains one time the index
+                        for (int j = 0; j < hardFrequency - 1; ++j) {
                             indexes.add(i);
                         }
                     }
@@ -100,20 +97,6 @@ public class CardMemorizer extends AppCompatActivity {
 
         setActualCard(cardsList.get(indexes.get(0)));
     }
-
-   /* @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            //| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            //| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            );}
-    }*/
 
     /**
      * Reveal the answer of the card.
@@ -195,6 +178,9 @@ public class CardMemorizer extends AppCompatActivity {
         setActualCard(cardsList.get(indexes.get(listIndex)));
     }
 
+    /**
+     * @param view
+     */
     public void checkboxChecked(View view) {
         if (!((CheckBox) view).isChecked()) {
             actualCard.setTag(ChemicalCard.Tag.NONE);
@@ -210,9 +196,32 @@ public class CardMemorizer extends AppCompatActivity {
                     break;
             }
         }
+        updateDeck();
         chemicalCardDAO.open();
         chemicalCardDAO.updateTag(actualCard);
         chemicalCardDAO.close();
+    }
+
+    private void updateDeck() {
+        int indexOfCurrentCard = cardsList.indexOf(actualCard);
+        if (!tagsChosen.contains(actualCard.getTag())) {
+            indexes.removeAll(Collections.singleton(indexOfCurrentCard));
+        } else {
+            if (actualCard.getTag().equals(ChemicalCard.Tag.HARD)) {
+                for (int j = 0; j < hardFrequency - 1; ++j) {
+                    indexes.add(indexOfCurrentCard);
+                }
+            } else {
+                indexes.removeAll(Collections.singleton(indexOfCurrentCard));
+                insertIntRandom(indexes, indexOfCurrentCard);
+            }
+        }
+    }
+
+    private void insertIntRandom(ArrayList<Integer> list, int elementToAdd) {
+        int size = list.size();
+        Random rand = new Random();
+        list.add(rand.nextInt(size + 1), elementToAdd);
     }
 
 

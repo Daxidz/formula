@@ -46,8 +46,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 "('Ammonium', 'NH\u2084\u207A') ," +
                 "('Hydronium', 'H\u2083O\u207A') ," +
                 "('Iodate', 'IO\u2083\u207B') ," +
-                "('Thiosulfate', 'S\u2081O\u2083\u00B2\u207B') ," +
-                "('Thiosulfite', 'S\u2081O\u2082\u00B2\u207B') ," +
+                "('Thiosulfate', 'S\u2082O\u2083\u00B2\u207B') ," +
+                "('Thiosulfite', 'S\u2082O\u2082\u00B2\u207B') ," +
                 "('Oxalate', 'C\u2082O\u2084\u00B2\u207B') ," +
                 "('Fluorure', 'F\u207B') ," +
                 "('Chlorure', 'C\u2113\u207B') ," +
@@ -65,9 +65,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 "('Hydrogénosulfite', 'HSO\u2083\u207B') ," +
                 "('Carbonate', 'CO\u2083\u00B2\u207B') ," +
                 "('Hydrogénocarbonate', 'HCO\u2083\u207B') ," +
-                "('Phosphate', 'PO\u2084\u2073\u207B') ," +
+                "('Phosphate', 'PO\u2084\u00B3\u207B') ," +
                 "('Hydrogénophosphate', 'HPO\u2084\u00B2\u207B') ," +
-                "('Phosphite', 'PO\u2083\u2073\u207B') ," +
+                "('Phosphite', 'PO\u2083\u00B3\u207B') ," +
                 "('Hydrogénophosphite', 'HPO\u2083\u00B2\u207B') ," +
                 "('Perchlorate', 'C\u2113O\u2084\u207B') ," +
                 "('Chlorate', 'C\u2113O\u2083\u207B') ," +

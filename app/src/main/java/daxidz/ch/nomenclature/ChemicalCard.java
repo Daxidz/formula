@@ -1,9 +1,5 @@
 package daxidz.ch.nomenclature;
 
-import android.os.Parcelable;
-
-import java.io.Serializable;
-
 /**
  * Created by David on 20.06.2017.
  */
@@ -56,8 +52,18 @@ public class ChemicalCard {
     }
 
     public enum Tag {
-        NONE, HARD, KNOWN;
+        NONE("-"), HARD("Difficile"), KNOWN("Connue");
 
+        Tag(String name) {
+            this.name = name;
+        }
 
-    };
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    ;
 }

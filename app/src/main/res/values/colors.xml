@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="hard_tag">#FFEB9AA4</color>
+    <color name="known_tag">#FFA4EB9A</color>
+    <color name="none_tag">#FFFFFFFF</color>
+
     <color name="black_overlay">#66000000</color>
     <color name="accent_material_light_1">#88a6ff</color>
 </resources>

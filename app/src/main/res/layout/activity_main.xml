@@ -18,10 +18,10 @@
             android:id="@+id/nameNomencButton"
             android:layout_weight="0.25"
             android:onClick="startNameToNomeclature"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/button_main_page"/>
 
         <Button
@@ -31,10 +31,10 @@
             android:id="@+id/nomencNameButton"
             android:layout_weight="0.25"
             android:onClick="startNomenclatureToName"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/button_main_page" />
 
         <Button
@@ -44,10 +44,24 @@
             android:id="@+id/randomButton"
             android:layout_weight="0.25"
             android:onClick="startRandom"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/button_main_page"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:text="Liste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listButton"
+            android:layout_weight="0.25"
+            android:onClick="startComponentsList"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/button_main_page"
             android:layout_gravity="center"/>
 
