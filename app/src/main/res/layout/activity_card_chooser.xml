@@ -4,48 +4,48 @@
     android:id="@+id/activity_card_chooser"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="daxidz.ch.nomenclature.CardChooser"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context="daxidz.ch.nomenclature.CardChooser">
 
 
     <TextView
-        android:text="Choix cartes"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:text="Choix cartes" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:text="Normales"
-            android:checked="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/checkboxNormal"
-            android:layout_weight="1" />
-
-        <CheckBox
-            android:text="Difficiles"
-            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Normales" />
+
+        <CheckBox
             android:id="@+id/checkboxDifficult"
-            android:layout_weight="1" />
-
-        <CheckBox
-            android:text="Connues"
-            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Difficiles" />
+
+        <CheckBox
             android:id="@+id/checkboxKnown"
-            android:layout_weight="1" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Connues" />
 
     </LinearLayout>
 
@@ -73,17 +73,19 @@
             android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <RadioButton
             android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <RadioButton
             android:id="@+id/radio3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
 
     </RadioGroup>

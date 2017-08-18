@@ -56,7 +56,7 @@ public class CardMemorizer extends AppCompatActivity {
         // Open the DB and load the cards corresponding to the tags chosen before
         chemicalCardDAO = new ChemicalCardDAO(this);
         chemicalCardDAO.open();
-        cardsList = chemicalCardDAO.selectTagged(tagsChosen);
+        cardsList = chemicalCardDAO.selectShouldLearnTagged(tagsChosen);
         chemicalCardDAO.close();
 
         if (cardsList.size() == 0) {
@@ -215,6 +215,11 @@ public class CardMemorizer extends AppCompatActivity {
                 indexes.removeAll(Collections.singleton(indexOfCurrentCard));
                 insertIntRandom(indexes, indexOfCurrentCard);
             }
+        }
+        if (indexes.isEmpty()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Le deck est vide!", Toast.LENGTH_SHORT);
+            toast.show();
+            finish();
         }
     }
 

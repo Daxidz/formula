@@ -8,6 +8,11 @@
     <color name="known_tag">#FFA4EB9A</color>
     <color name="none_tag">#FFFFFFFF</color>
 
+    <color name="should_learn">#FFFFFFFF</color>
+    <color name="should_not_learn">#FFAAAAAA</color>
+
+    <color name="gray_border">#818181</color>
+
     <color name="black_overlay">#66000000</color>
     <color name="accent_material_light_1">#88a6ff</color>
 </resources>

@@ -15,6 +15,8 @@ public class ChemicalCard {
     // Used to know if it is tagged as difficult
     private Tag tag;
 
+    private boolean shouldLearn;
+
     private int id;
 
     public ChemicalCard() {
@@ -49,6 +51,14 @@ public class ChemicalCard {
 
     public void setTag(Tag tag) {
         this.tag = tag;
+    }
+
+    public boolean isShouldLearn() {
+        return shouldLearn;
+    }
+
+    public void setShouldLearn(boolean shouldLearn) {
+        this.shouldLearn = shouldLearn;
     }
 
     public enum Tag {

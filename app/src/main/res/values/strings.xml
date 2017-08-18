@@ -7,4 +7,7 @@
     <string name="hard">Difficile</string>
     <string name="known">Connue</string>
     <string name="none">-</string>
+    <string name="connues">Connues</string>
+    <string name="difficiles">Difficiles</string>
+    <string name="normales">Normales</string>
 </resources>

@@ -1,21 +1,18 @@
 package daxidz.ch.nomenclature;
 
-import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import daxidz.ch.nomenclature.database.ChemicalCardDAO;
 
-public class ComponentsList extends Activity {
+public class ComponentsList extends AppCompatActivity {
 
     private ChemicalCardDAO chemicalCardDAO = new ChemicalCardDAO(this);
 
@@ -25,10 +22,24 @@ public class ComponentsList extends Activity {
 
     private ArrayList<ChemicalCard> cardsList;
 
+    private ArrayList<ChemicalCard.Tag> tagsToShow = new ArrayList<>();
+
+    private boolean showShouldLearn = true;
+
+    private Menu menu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_components_list);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Liste");
+        setSupportActionBar(toolbar);
+
+        tagsToShow.add(ChemicalCard.Tag.NONE);
+        tagsToShow.add(ChemicalCard.Tag.HARD);
+        tagsToShow.add(ChemicalCard.Tag.KNOWN);
 
         chemicalCardDAO.open();
         cardsList = chemicalCardDAO.selectAll();
@@ -36,73 +47,91 @@ public class ComponentsList extends Activity {
 
         componentsList = (ListView) findViewById(R.id.components_list);
 
-        componentListAdapter = new ComponentListAdapter(cardsList, getApplicationContext());
+        componentsList.setNestedScrollingEnabled(true);
+
+        componentListAdapter = new ComponentListAdapter(cardsList, getApplicationContext(), chemicalCardDAO);
 
         componentsList.setAdapter(componentListAdapter);
-
-        componentsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ChemicalCard cardToChange = (ChemicalCard) adapterView.getAdapter().getItem(position);
-
-                cardToChange.setTag(ChemicalCard.Tag.values()[(cardToChange.getTag().ordinal() + 1) % ChemicalCard.Tag.values().length]);
-                //componentListAdapter.notifyDataSetChanged();
-                chemicalCardDAO.open();
-                chemicalCardDAO.updateTag(cardToChange);
-                chemicalCardDAO.close();
-                changeTagsShown(null);
-            }
-        });
     }
 
-    synchronized public void changeTagsShown(View view) {
-
-        ArrayList<ChemicalCard.Tag> tagsToShow = new ArrayList<>();
-
-        if (((CheckBox) findViewById(R.id.showHardCheckbox)).isChecked()) {
-            tagsToShow.add(ChemicalCard.Tag.HARD);
-        }
-        if (((CheckBox) findViewById(R.id.showKnownCheckbox)).isChecked()) {
-            tagsToShow.add(ChemicalCard.Tag.KNOWN);
-        }
-        if (((CheckBox) findViewById(R.id.showNoneCheckbox)).isChecked()) {
-            tagsToShow.add(ChemicalCard.Tag.NONE);
-        }
-
-        chemicalCardDAO.open();
-        ArrayList<ChemicalCard> cardsListTagsChosen = chemicalCardDAO.selectTagged(tagsToShow);
-        chemicalCardDAO.close();
-        componentListAdapter.clear();
-        componentListAdapter.addAll(cardsListTagsChosen);
-        componentListAdapter.notifyDataSetChanged();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_list_component, menu);
+        this.menu = menu;
+        return true;
     }
 
-    public void resetTags(View view) {
-        /*new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voidable) {
-                chemicalCardDAO.open();
-                cardsList = chemicalCardDAO.selectAll();
-                for (int i = 0; i < cardsList.size(); ++i) {
-                    cardsList.get(i).setTag(ChemicalCard.Tag.NONE);
-                    chemicalCardDAO.updateTag(cardsList.get(i));
-                }
-                chemicalCardDAO.close();
-                return null;
-            }
+    synchronized public void changeTagsShown(MenuItem item) {
+        ChemicalCard.Tag tagToModify = null;
 
-            @Override
-            protected void onPostExecute(Void voidable) {
-                changeTagsShown(null);
-            }
-        }.execute();*/
+        switch (item.getItemId()) {
+            case R.id.showHardCheckbox:
+                tagToModify = ChemicalCard.Tag.HARD;
+                break;
+            case R.id.showKnownCheckbox:
+                tagToModify = ChemicalCard.Tag.KNOWN;
+                break;
+            case R.id.showNoneCheckbox:
+                tagToModify = ChemicalCard.Tag.NONE;
+                break;
+            default:
+
+        }
+        if (!item.isChecked()) {
+            item.setChecked(true);
+            tagsToShow.add(tagToModify);
+        } else {
+            item.setChecked(false);
+            tagsToShow.remove(tagToModify);
+        }
+
+        updateListToShow();
+    }
+
+    public void resetTags(MenuItem item) {
+        ArrayList<ChemicalCard.Tag> tagToChange = new ArrayList<>();
+        switch (item.getItemId()) {
+            case R.id.resetHardTags:
+                tagToChange.add(ChemicalCard.Tag.HARD);
+                break;
+            case R.id.resetKnownTags:
+                tagToChange.add(ChemicalCard.Tag.KNOWN);
+                break;
+        }
         chemicalCardDAO.open();
-        cardsList = chemicalCardDAO.selectAll();
+        cardsList = chemicalCardDAO.selectTagged(tagToChange);
         for (int i = 0; i < cardsList.size(); ++i) {
             cardsList.get(i).setTag(ChemicalCard.Tag.NONE);
             chemicalCardDAO.updateTag(cardsList.get(i));
         }
         chemicalCardDAO.close();
-        changeTagsShown(null);
+        updateListToShow();
     }
+
+    public void changeShouldLearnShown(MenuItem item) {
+        if (!item.isChecked()) {
+            item.setChecked(true);
+            showShouldLearn = true;
+        } else {
+            item.setChecked(false);
+            showShouldLearn = false;
+        }
+        updateListToShow();
+    }
+
+    public void updateListToShow() {
+        chemicalCardDAO.open();
+        if (showShouldLearn) {
+            cardsList = chemicalCardDAO.selectTagged(tagsToShow);
+        } else {
+            cardsList = chemicalCardDAO.selectShouldLearnTagged(tagsToShow);
+        }
+        chemicalCardDAO.close();
+
+        componentListAdapter.clear();
+        componentListAdapter.addAll(cardsList);
+        componentListAdapter.notifyDataSetChanged();
+    }
+
 }

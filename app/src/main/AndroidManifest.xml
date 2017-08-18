@@ -13,19 +13,22 @@
             android:theme="@style/Formula">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".CardMemorizer"
-            android:theme="@style/Formula" />
+            android:theme="@style/Formula"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation" />
         <activity
             android:name=".CardChooser"
             android:theme="@style/Formula" />
         <activity
             android:name=".ComponentsList"
-            android:theme="@style/Formula"></activity>
+            android:theme="@style/Formula"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"></activity>
     </application>
 
 </manifest>

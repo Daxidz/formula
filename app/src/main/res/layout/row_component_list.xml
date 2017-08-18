@@ -7,10 +7,14 @@
 
 
     <LinearLayout
+        android:clickable="true"
+        android:id="@+id/textArea"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/stroke_width"
+        android:layout_marginLeft="@dimen/stroke_width"
+        android:layout_marginTop="@dimen/stroke_width"
         android:layout_weight="0.4"
-        android:background="@drawable/rectangle"
         android:orientation="vertical">
 
         <TextView
@@ -20,17 +24,18 @@
             android:layout_marginLeft="7dp"
             android:layout_marginTop="4dp"
             android:gravity="center_vertical"
-            android:textSize="18dp"
-            android:textColor="#606060" />
+            android:textColor="#606060"
+            android:textSize="18dp" />
 
         <View
+            android:id="@+id/separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
             android:layout_marginTop="4dp"
-            android:background="@android:color/darker_gray" />
+            android:background="@color/gray_border" />
 
         <TextView
             android:id="@+id/formula"
@@ -39,20 +44,26 @@
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="7dp"
             android:gravity="center_vertical"
-            android:textSize="18dp"
-            android:textColor="#606060" />
+            android:textColor="#606060"
+            android:textSize="18dp" />
 
     </LinearLayout>
 
+    <View
+        android:layout_width="@dimen/stroke_width"
+        android:layout_height="match_parent"
+        android:background="@color/gray_border" />
+
     <TextView
+        android:clickable="true"
         android:id="@+id/tag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/stroke_width"
+        android:layout_marginRight="@dimen/stroke_width"
+        android:layout_marginTop="@dimen/stroke_width"
         android:layout_weight="0.6"
         android:gravity="center"
-        android:layout_marginRight="@dimen/stroke_width"
-        android:layout_marginBottom="@dimen/stroke_width"
-        android:layout_marginTop="@dimen/stroke_width"
-        android:textColor="#606060"/>
+        android:textColor="#606060" />
 
 </LinearLayout>

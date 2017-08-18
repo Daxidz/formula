@@ -1,7 +1,5 @@
 package daxidz.ch.nomenclature;
 
-import java.io.Serializable;
-
 /**
  * Created by David on 21.06.2017.
  */

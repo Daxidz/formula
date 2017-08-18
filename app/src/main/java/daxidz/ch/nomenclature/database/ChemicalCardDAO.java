@@ -15,18 +15,23 @@ import daxidz.ch.nomenclature.ChemicalCard;
 public class ChemicalCardDAO extends BaseDAO {
 
     public static final String NAME = "name";
-    public static final String FORMULA = "nomenclature";
+    public static final String FORMULA = "formula";
     public static final String TAG = "tag";
+    public static final String SHOULD_LEARN = "should_learn";
+
+    public static final int TRUE = 1;
+    public static final int FALSE = 0;
 
     public static final String TABLE_NAME = "Chemical_card";
 
-    private String[] allCollumns = { NAME, FORMULA, TAG };
+    private String[] allCollumns = {NAME, FORMULA, TAG, SHOULD_LEARN};
 
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     NAME + " TEXT NOT NULL PRIMARY KEY, " +
                     FORMULA + " TEXT NOT NULL, " +
-                    TAG + " INTEGER DEFAULT " + ChemicalCard.Tag.NONE +
+                    TAG + " INTEGER DEFAULT " + ChemicalCard.Tag.NONE + ", " +
+                    SHOULD_LEARN + " INTEGER DEFAULT " + TRUE +
                     " );";
 
     public static final String DROP_TABLE =
@@ -56,7 +61,15 @@ public class ChemicalCardDAO extends BaseDAO {
         ContentValues value = new ContentValues();
 
         value.put(TAG, card.getTag().ordinal());
-        database.update(TABLE_NAME, value, NAME + " = ?", new String[] {String.valueOf(card.getName())});
+        database.update(TABLE_NAME, value, NAME + " = ?", new String[]{String.valueOf(card.getName())});
+    }
+
+    public void updateShouldLearn(ChemicalCard card) {
+        ContentValues value = new ContentValues();
+
+        int shouldLearnInt = card.isShouldLearn() ? TRUE : FALSE;
+        value.put(SHOULD_LEARN, shouldLearnInt);
+        database.update(TABLE_NAME, value, NAME + " = ?", new String[]{String.valueOf(card.getName())});
     }
 
     public ArrayList<ChemicalCard> selectAll() {
@@ -73,6 +86,25 @@ public class ChemicalCardDAO extends BaseDAO {
         }
         cursor.close();
         return chemicalCards;
+    }
+
+    public ArrayList<ChemicalCard> selectShouldLearn() {
+        ArrayList<ChemicalCard> chemicalCards = new ArrayList<>();
+
+        Cursor cursor = database.query(TABLE_NAME, allCollumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            ChemicalCard card = cursorToChemicalCard(cursor);
+            if (card.isShouldLearn()) {
+                chemicalCards.add(card);
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return chemicalCards;
+
     }
 
     public ArrayList<ChemicalCard> selectTagged(ArrayList<ChemicalCard.Tag> tags) {
@@ -98,12 +130,39 @@ public class ChemicalCardDAO extends BaseDAO {
         return chemicalCards;
     }
 
+    public ArrayList<ChemicalCard> selectShouldLearnTagged(ArrayList<ChemicalCard.Tag> tags) {
+        ArrayList<ChemicalCard> chemicalCards = new ArrayList<>();
+
+        Cursor cursor = database.query(TABLE_NAME, allCollumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            ChemicalCard card = cursorToChemicalCard(cursor);
+            if (card.isShouldLearn()) {
+                ChemicalCard.Tag tag = card.getTag();
+                // Iterate over the tags wanted and if one matches, add the card to the deck
+                for (int i = 0; i < tags.size(); ++i) {
+                    if (tag == tags.get(i)) {
+                        chemicalCards.add(card);
+                        break;
+                    }
+                }
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return chemicalCards;
+    }
+
     private ChemicalCard cursorToChemicalCard(Cursor cursor) {
         ChemicalCard card = new ChemicalCard();
         card.setName(cursor.getString(0));
         card.setNomenclature(cursor.getString(1));
 
         card.setTag(ChemicalCard.Tag.values()[cursor.getInt(2)]);
+
+        card.setShouldLearn(cursor.getInt(3) == 1);
 
         return card;
     }

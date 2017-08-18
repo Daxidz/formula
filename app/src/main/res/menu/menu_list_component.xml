@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="Resets"
+        app:showAsAction="always|withText">
+        <menu>
+            <item
+                android:id="@+id/resetHardTags"
+                android:onClick="resetTags"
+                android:title="Reset tags difficiles" />
+            <item
+                android:id="@+id/resetKnownTags"
+                android:onClick="resetTags"
+                android:title="Reset tags connues" />
+        </menu>
+    </item>
+
+    <item
+        android:title="Affichage"
+        app:showAsAction="always|withText">
+        <menu>
+            <item
+                android:id="@+id/showNoneCheckbox"
+                android:checkable="true"
+                android:checked="true"
+                android:onClick="changeTagsShown"
+                android:title="Normales" />
+            <item
+                android:id="@+id/showHardCheckbox"
+                android:checkable="true"
+                android:checked="true"
+                android:onClick="changeTagsShown"
+                android:title="Difficiles" />
+            <item
+                android:id="@+id/showKnownCheckbox"
+                android:checkable="true"
+                android:checked="true"
+                android:onClick="changeTagsShown"
+                android:title="Connues" />
+            <item
+                android:id="@+id/showShouldLearnCheckbox"
+                android:checkable="true"
+                android:checked="true"
+                android:onClick="changeShouldLearnShown"
+                android:title="Ne pas apprendre" />
+        </menu>
+    </item>
+
+</menu>
