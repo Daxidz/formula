@@ -13,7 +13,7 @@ import java.util.Collections;
 
 import daxidz.ch.nomenclature.database.ChemicalCardDAO;
 
-public class ComponentsList extends AppCompatActivity {
+public class ComponentsListing extends AppCompatActivity {
 
     private ChemicalCardDAO chemicalCardDAO = new ChemicalCardDAO(this);
 
@@ -95,19 +95,20 @@ public class ComponentsList extends AppCompatActivity {
     }
 
     public void resetTags(MenuItem item) {
-        ArrayList<ChemicalCard.Tag> tagToChange = new ArrayList<>();
+        ChemicalCard.Tag tagToChange = null;
         switch (item.getItemId()) {
             case R.id.resetHardTags:
-                tagToChange.add(ChemicalCard.Tag.HARD);
+                tagToChange = ChemicalCard.Tag.HARD;
                 break;
             case R.id.resetKnownTags:
-                tagToChange.add(ChemicalCard.Tag.KNOWN);
+                tagToChange = ChemicalCard.Tag.KNOWN;
                 break;
         }
+
         chemicalCardDAO.open();
-        cardsListComplete = chemicalCardDAO.selectTagged(tagToChange);
         for (int i = 0; i < cardsListComplete.size(); ++i) {
-            cardsListComplete.get(i).setTag(ChemicalCard.Tag.NONE);
+            if ((cardsListComplete.get(i).getTag()).equals(tagToChange))
+                cardsListComplete.get(i).setTag(ChemicalCard.Tag.NONE);
             chemicalCardDAO.updateTag(cardsListComplete.get(i));
         }
         chemicalCardDAO.close();

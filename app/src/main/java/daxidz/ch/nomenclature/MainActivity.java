@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startComponentsList(View view) {
-        Intent intent = new Intent(this, ComponentsList.class);
+        Intent intent = new Intent(this, ComponentsListing.class);
         startActivity(intent);
     }
 
