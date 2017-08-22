@@ -1,12 +1,12 @@
 <img src="https://github.com/Daxidz/formula/blob/master/images/formula_icon.png" width="200">
 
 # Formula
-Formula is an app which let you revise your formula/name of bases and acids. It is based on flip cards and have an already loaded database.
+Formula is an app which let you revise your formulas/names of bases and acids. It is based on flip cards and have an already loaded database.
 It was initially developped for student of "Gymnase de Nyon". It is currently only in french.
 
 ## Features
 - Already loaded database.
-- 3 modes: "Name to formula", "Formula to name" or "Random".
+- 3 modes: `Name to formula`, `Formula to name` or `Random`.
 - Possibility to add *Difficult* or *Known* to the cards.
 - Choose the cards you want before each try.
 - Have an overview of all the pairs with sorting options and a possibility to show only some tags. Change the tags from here.
