@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Normales" />
+            android:text="@string/normales" />
 
         <CheckBox
             android:id="@+id/checkboxDifficult"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Difficiles" />
+            android:text="@string/difficiles" />
 
         <CheckBox
             android:id="@+id/checkboxKnown"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Connues" />
+            android:text="@string/connues" />
 
     </LinearLayout>
 

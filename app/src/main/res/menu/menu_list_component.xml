@@ -26,19 +26,19 @@
                 android:checkable="true"
                 android:checked="true"
                 android:onClick="changeTagsShown"
-                android:title="Normales" />
+                android:title="@string/normales" />
             <item
                 android:id="@+id/showHardCheckbox"
                 android:checkable="true"
                 android:checked="true"
                 android:onClick="changeTagsShown"
-                android:title="Difficiles" />
+                android:title="@string/difficiles" />
             <item
                 android:id="@+id/showKnownCheckbox"
                 android:checkable="true"
                 android:checked="true"
                 android:onClick="changeTagsShown"
-                android:title="Connues" />
+                android:title="@string/connues" />
             <item
                 android:id="@+id/showShouldLearnCheckbox"
                 android:checkable="true"
@@ -49,10 +49,16 @@
     </item>
 
     <item
-        android:title="Tri alphabétique"
-        android:onClick="sortAlphabetical"/>
-    <item
-        android:title="Tri par tag"
-        android:onClick="sortByTag"/>
+        android:title="Tri"
+        app:showAsAction="always|withText">
+        <menu>
+            <item
+                android:onClick="sortAlphabetical"
+                android:title="Tri alphabétique" />
+            <item
+                android:onClick="sortByTag"
+                android:title="Tri par tag" />
+        </menu>
+    </item>
 
 </menu>

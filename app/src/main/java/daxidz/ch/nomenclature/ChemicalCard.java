@@ -1,7 +1,5 @@
 package daxidz.ch.nomenclature;
 
-import android.support.annotation.NonNull;
-
 import java.util.Comparator;
 
 /**
@@ -21,7 +19,6 @@ public class ChemicalCard {
 
     private boolean shouldLearn;
 
-    private int id;
 
     public ChemicalCard() {
 
@@ -66,7 +63,7 @@ public class ChemicalCard {
     }
 
     public enum Tag implements Comparable<Tag> {
-        KNOWN("Connue"), NONE("-"), HARD("Difficile");
+        KNOWN("Apprise"), NONE("Pas apprise"), HARD("Difficile");
 
         Tag(String name) {
             this.name = name;
@@ -86,7 +83,6 @@ public class ChemicalCard {
         };
 
     }
-
 
 
     public static Comparator NameComparator = new Comparator() {

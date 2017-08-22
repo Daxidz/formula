@@ -24,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startNameToNomeclature(View view) {
-        startCardChooser(Mode.NAME_TO_NOMENCLATURE);
+        startCardChooser(Mode.NAME_TO_FORMULA);
     }
 
     public void startNomenclatureToName(View view) {
-        startCardChooser(Mode.NOMECLATURE_TO_NAME);
+        startCardChooser(Mode.FORMULA_TO_NAME);
     }
 
     public void startRandom(View view) {

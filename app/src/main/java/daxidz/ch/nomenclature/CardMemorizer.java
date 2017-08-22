@@ -137,10 +137,10 @@ public class CardMemorizer extends AppCompatActivity {
 
         String textToDisplay = "";
         switch (mode) {
-            case NAME_TO_NOMENCLATURE:
+            case NAME_TO_FORMULA:
                 textToDisplay = card.getName();
                 break;
-            case NOMECLATURE_TO_NAME:
+            case FORMULA_TO_NAME:
                 textToDisplay = card.getNomenclature();
                 break;
             case RANDOM:

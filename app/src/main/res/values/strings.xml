@@ -5,9 +5,9 @@
     <string name="title_activity_card_chooser">CardChooser</string>
 
     <string name="hard">Difficile</string>
-    <string name="known">Connue</string>
-    <string name="none">-</string>
-    <string name="connues">Connues</string>
+    <string name="known">Apprise</string>
+    <string name="none">Pas apprise</string>
+    <string name="connues">Apprises</string>
     <string name="difficiles">Difficiles</string>
-    <string name="normales">Normales</string>
+    <string name="normales">Pas apprises</string>
 </resources>

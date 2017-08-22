@@ -5,5 +5,5 @@ package daxidz.ch.nomenclature;
  */
 
 public enum Mode {
-    NAME_TO_NOMENCLATURE, NOMECLATURE_TO_NAME, RANDOM;
+    NAME_TO_FORMULA, FORMULA_TO_NAME, RANDOM;
 }
