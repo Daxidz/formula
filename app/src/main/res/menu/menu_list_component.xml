@@ -48,4 +48,11 @@
         </menu>
     </item>
 
+    <item
+        android:title="Tri alphabétique"
+        android:onClick="sortAlphabetical"/>
+    <item
+        android:title="Tri par tag"
+        android:onClick="sortByTag"/>
+
 </menu>

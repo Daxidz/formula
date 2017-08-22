@@ -30,7 +30,7 @@ public class ChemicalCardDAO extends BaseDAO {
             "CREATE TABLE " + TABLE_NAME + " (" +
                     NAME + " TEXT NOT NULL PRIMARY KEY, " +
                     FORMULA + " TEXT NOT NULL, " +
-                    TAG + " INTEGER DEFAULT " + ChemicalCard.Tag.NONE + ", " +
+                    TAG + " INTEGER DEFAULT " + ChemicalCard.Tag.NONE.ordinal() + ", " +
                     SHOULD_LEARN + " INTEGER DEFAULT " + TRUE +
                     " );";
 

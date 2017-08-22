@@ -11,7 +11,7 @@ import daxidz.ch.nomenclature.database.DatabaseHandler;
 
 public abstract class BaseDAO {
 
-    protected final static int VERSION = 7;
+    protected final static int VERSION = 9;
 
     protected final static String NAME = "database.db";
 

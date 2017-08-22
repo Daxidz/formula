@@ -8,7 +8,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import daxidz.ch.nomenclature.database.ChemicalCardDAO;
 
@@ -20,7 +22,9 @@ public class ComponentsList extends AppCompatActivity {
 
     private ComponentListAdapter componentListAdapter;
 
-    private ArrayList<ChemicalCard> cardsList;
+    private ArrayList<ChemicalCard> cardsListComplete;
+
+    private ArrayList<ChemicalCard> cardsListToShow;
 
     private ArrayList<ChemicalCard.Tag> tagsToShow = new ArrayList<>();
 
@@ -42,14 +46,16 @@ public class ComponentsList extends AppCompatActivity {
         tagsToShow.add(ChemicalCard.Tag.KNOWN);
 
         chemicalCardDAO.open();
-        cardsList = chemicalCardDAO.selectAll();
+        cardsListComplete = chemicalCardDAO.selectAll();
         chemicalCardDAO.close();
+
+        cardsListToShow = new ArrayList<>(cardsListComplete);
 
         componentsList = (ListView) findViewById(R.id.components_list);
 
         componentsList.setNestedScrollingEnabled(true);
 
-        componentListAdapter = new ComponentListAdapter(cardsList, getApplicationContext(), chemicalCardDAO);
+        componentListAdapter = new ComponentListAdapter(cardsListToShow, getApplicationContext(), chemicalCardDAO);
 
         componentsList.setAdapter(componentListAdapter);
     }
@@ -100,10 +106,10 @@ public class ComponentsList extends AppCompatActivity {
                 break;
         }
         chemicalCardDAO.open();
-        cardsList = chemicalCardDAO.selectTagged(tagToChange);
-        for (int i = 0; i < cardsList.size(); ++i) {
-            cardsList.get(i).setTag(ChemicalCard.Tag.NONE);
-            chemicalCardDAO.updateTag(cardsList.get(i));
+        cardsListComplete = chemicalCardDAO.selectTagged(tagToChange);
+        for (int i = 0; i < cardsListComplete.size(); ++i) {
+            cardsListComplete.get(i).setTag(ChemicalCard.Tag.NONE);
+            chemicalCardDAO.updateTag(cardsListComplete.get(i));
         }
         chemicalCardDAO.close();
         updateListToShow();
@@ -121,17 +127,31 @@ public class ComponentsList extends AppCompatActivity {
     }
 
     public void updateListToShow() {
-        chemicalCardDAO.open();
-        if (showShouldLearn) {
-            cardsList = chemicalCardDAO.selectTagged(tagsToShow);
-        } else {
-            cardsList = chemicalCardDAO.selectShouldLearnTagged(tagsToShow);
+        cardsListToShow.clear();
+        for (ChemicalCard card : cardsListComplete) {
+            if (!showShouldLearn) {
+                if (!card.isShouldLearn()) {
+                    continue;
+                }
+            }
+            for (int i = 0; i < tagsToShow.size(); ++i) {
+                if (card.getTag() == tagsToShow.get(i)) {
+                    cardsListToShow.add(card);
+                    break;
+                }
+            }
         }
-        chemicalCardDAO.close();
-
-        componentListAdapter.clear();
-        componentListAdapter.addAll(cardsList);
         componentListAdapter.notifyDataSetChanged();
+    }
+
+    public void sortAlphabetical(MenuItem item) {
+        Collections.sort(cardsListComplete, ChemicalCard.NameComparator);
+        updateListToShow();
+    }
+
+    public void sortByTag(MenuItem item) {
+        Collections.sort(cardsListComplete, ChemicalCard.TagComparator);
+        updateListToShow();
     }
 
 }
