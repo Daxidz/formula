@@ -87,14 +87,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="checkboxChecked"
-            android:text="Difficile" />
+            android:text="@string/difficiles"/>
 
         <CheckBox
             android:id="@+id/knownCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="checkboxChecked"
-            android:text="Connue" />
+            android:text="@string/known" />
 
     </LinearLayout>
 
